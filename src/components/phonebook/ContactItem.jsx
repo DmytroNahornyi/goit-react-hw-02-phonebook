@@ -1,24 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { ContactForm, ContactName, ContactNumber, DeleteButton } from './Phonebook.styled';
+// import './styles/ContactListItem.css';
 
-function ContactItem({ id, name, number, onDelete }) {
-  return (
-    <ContactForm>
-      <ContactName>{name}</ContactName>
-      <ContactNumber>{number}</ContactNumber>
-      <DeleteButton type="button" onClick={() => onDelete(id)}>
-        Delete
-      </DeleteButton>
-    </ContactForm>
-  );
+function ContactListItem({ contact, onDeleteContact }) {
+return (
+<li className="ContactListItem">
+<p className="ContactListItem__name">{contact.name}</p>
+<p className="ContactListItem__number">{contact.number}</p>
+<button
+type="button"
+className="ContactListItem__button"
+onClick={() => onDeleteContact(contact.id)}
+>
+Delete
+</button>
+</li>
+);
 }
 
-ContactItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
-
-export default ContactItem;
+export default ContactListItem;
