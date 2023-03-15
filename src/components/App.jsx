@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 // import { nanoid } from 'nanoid';
 import { AppContainer, Title } from './phonebook/Phonebook.styled';
@@ -7,38 +7,51 @@ import ContactList from './phonebook/ContactList/ContactList';
 import Filter from './phonebook/Filter/Filter';
 // import '../index.css';
 
-function App() {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      contacts: [],
+      filter: '',
+    };
+    this.addContact = this.addContact.bind(this);
+    this.deleteContact = this.deleteContact.bind(this);
+    this.changeFilter = this.changeFilter.bind(this);
+  }
 
-  const addContact = newContact => {
-    setContacts([...contacts, newContact]);
-  };
+  addContact(newContact) {
+    this.setState(prevState => ({ contacts: [...prevState.contacts, newContact] }));
+  }
 
-  const deleteContact = contactId => {
-    setContacts(contacts.filter(contact => contact.id !== contactId));
-  };
+  deleteContact(contactId) {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  }
 
-  const changeFilter = e => {
-    setFilter(e.target.value);
-  };
+  changeFilter(e) {
+    this.setState({ filter: e.target.value });
+  }
 
-  const filteredContacts = contacts.filter(contact => {
-    return typeof filter === 'string' && contact.name.toLowerCase().includes(filter.toLowerCase());
-  });
+  render() {
+    const { contacts, filter } = this.state;
+    const filteredContacts = contacts.filter(contact => {
+      return typeof filter === 'string' && contact.name.toLowerCase().includes(filter.toLowerCase());
+    });
 
-  return (
-    <AppContainer>
-      <Title>Phonebook</Title>
-      <Filter value={filter} onChange={changeFilter} />
-      <ContactForm onAddContact={addContact} />
-      <h2>Contacts</h2>
-      <ContactList contacts={filteredContacts} onDeleteContact={deleteContact} />
-    </AppContainer>
-  );
+    return (
+      <AppContainer>
+        <Title>Phonebook</Title>
+        <Filter value={filter} onChange={this.changeFilter} />
+        <ContactForm onAddContact={this.addContact} />
+        <h2>Contacts</h2>
+        <ContactList contacts={filteredContacts} onDeleteContact={this.deleteContact} />
+      </AppContainer>
+    );
+  }
 }
 
-ContactForm.propTypes = {
+App.propTypes = {
   onAddContact: PropTypes.func.isRequired,
 };
 
@@ -54,4 +67,3 @@ ContactList.propTypes = {
 };
 
 export default App;
-
