@@ -4,19 +4,12 @@ import { nanoid } from 'nanoid';
 import { Form, Input, Button } from '../Phonebook.styled';
 
 class ContactForm extends React.Component {
-  constructor(props) {
-    super(props);
+  state = {
+    name: '',
+    number: '',
+  };
 
-    this.state = {
-      name: '',
-      number: '',
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleInputChange(e) {
+  handleInputChange = (e) => {
     const { name, value } = e.target;
 
     this.setState({
@@ -24,7 +17,7 @@ class ContactForm extends React.Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const { name, number } = this.state;

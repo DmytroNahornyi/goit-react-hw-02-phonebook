@@ -11,15 +11,6 @@ function ContactItem({ contact, onDeleteContact }) {
   );
 }
 
-// ContactItem.propTypes = {
-//   contact: PropTypes.shape({
-//     id: PropTypes.string.isRequired,
-//     name: PropTypes.string.isRequired,
-//     number: PropTypes.string.isRequired,
-//   }).isRequired,
-//   onDeleteContact: PropTypes.func.isRequired,
-// };
-
 function ContactList({ contacts, onDeleteContact }) {
   return (
     <List>
